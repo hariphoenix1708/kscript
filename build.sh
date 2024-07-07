@@ -18,11 +18,11 @@ fi
 KDIR=$(pwd)
 TC="${KDIR}/.tools"
 AK=${TC}/AnyKernel
-KERNEL_NAME="Derp-KSU"
+KERNEL_NAME="Phoenix-KSU"
 KERNEL_TYPE="EAS"
-PHONE="Poco X3 Pro"
-DEVICE="vayu"
-CONFIG=${CONFIG:-vayu_user_defconfig}
+PHONE="Redmi Note 10 Pro"
+DEVICE="sweet"
+CONFIG=${CONFIG:-sweet_user_defconfig}
 #CODENAME="-Testing"
 CHAT_ID="${CHAT_ID}"
 TOKEN="${TOKEN}"
