@@ -172,6 +172,7 @@ tg_error() {
 
 build_kernel() {
 Start=$(date +"%s")
+	make "$DEFCONFIG_DEVICE" O=out
 
 	make -j$(nproc --all) O=out \
                               ARCH=arm64 \
