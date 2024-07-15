@@ -46,83 +46,15 @@ rm -rf error.log
 #
 
 # Devices
-if [ "$DEVICE_TYPE" == courbet  ];
-then
-DEVICE="XIAOMI 11 LITE (OSS)"
-KERNEL_NAME="SLEEPY_KERNEL-OSS"
-CODENAME="COURBET"
-
-DEFCONFIG_COMMON="vendor/sdmsteppe-perf_defconfig"
-DEFCONFIG_DEVICE="vendor/courbet.config"
-
-AnyKernel="https://github.com/itsshashanksp/AnyKernel3.git"
-AnyKernelbranch="courbet"
-fi
-
-if [ "$DEVICE_TYPE" == davinci  ];
-then
-DEVICE="REDMI K20 (OSS)"
-KERNEL_NAME="SLEEPY_KERNEL-OSS"
-CODENAME="DAVINCI"
-
-DEFCONFIG_COMMON="vendor/sdmsteppe-perf_defconfig"
-DEFCONFIG_DEVICE="vendor/davinci.config"
-
-AnyKernel="https://github.com/itsshashanksp/AnyKernel3.git"
-AnyKernelbranch="davinci"
-fi
-
-if [ "$DEVICE_TYPE" == phoenix  ];
-then
-DEVICE="REDMI K30 & POCO X2 (OSS)"
-KERNEL_NAME="SLEEPY_KERNEL-OSS"
-CODENAME="PHOENIX"
-
-DEFCONFIG_COMMON="vendor/sdmsteppe-perf_defconfig"
-DEFCONFIG_DEVICE="vendor/phoenix.config"
-
-AnyKernel="https://github.com/itsshashanksp/AnyKernel3.git"
-AnyKernelbranch="phoenix"
-fi
-
-if [ "$DEVICE_TYPE" == sweet  ];
-then
 DEVICE="REDMI NOTE 10 PRO (OSS)"
 KERNEL_NAME="SLEEPY_KERNEL-OSS"
 CODENAME="SWEET"
 
-#DEFCONFIG_COMMON="vendor/sdmsteppe-perf_defconfig"
-DEFCONFIG_DEVICE="vendor/sweet_defconfig"
+##DEFCONFIG_COMMON="vendor/sdmsteppe-perf_defconfig"
+DEFCONFIG="vendor/sweet_defconfig"
 
 AnyKernel="https://github.com/itsshashanksp/AnyKernel3.git"
 AnyKernelbranch="master"
-fi
-
-if [ "$DEVICE_TYPE" == sweetk6a  ];
-then
-DEVICE="REDMI NOTE 12 PRO 4G (OSS)"
-KERNEL_NAME="SLEEPY_KERNEL-OSS"
-CODENAME="SWEET-K6A"
-
-DEFCONFIG_COMMON="vendor/sdmsteppe-perf_defconfig"
-DEFCONFIG_DEVICE="vendor/sweetk6a.config"
-
-AnyKernel="https://github.com/itsshashanksp/AnyKernel3.git"
-AnyKernelbranch="sweetk6a"
-fi
-
-if [ "$DEVICE_TYPE" == violet  ];
-then
-DEVICE="REDMI NOTE 7 PRO (OSS)"
-KERNEL_NAME="SLEEPY_KERNEL-OSS"
-CODENAME="violet"
-
-DEFCONFIG_COMMON="vendor/sdmsteppe-perf_defconfig"
-DEFCONFIG_DEVICE="vendor/violet.config"
-
-AnyKernel="https://github.com/itsshashanksp/AnyKernel3.git"
-AnyKernelbranch="violet"
-fi
 
 # Kernel build release tag
 KRNL_REL_TAG="$KERNEL_TAG"
@@ -172,7 +104,7 @@ tg_error() {
 
 build_kernel() {
 Start=$(date +"%s")
-	make  O=out "$DEFCONFIG_DEVICE"
+	make  O=out "$DEFCONFIG"
 
 	make -j$(nproc --all) O=out \
                               ARCH=arm64 \
@@ -206,7 +138,7 @@ mkdir -p out
 
 make clean && make mrproper
 #make "$DEFCONFIG_COMMON" O=out
-make "$DEFCONFIG_DEVICE" O=out
+make "$DEFCONFIG" O=out
 
 echo -e "$yellow << compiling the kernel >> \n $white"
 tg_post_msg "Successful triggered Compiling kernel for $DEVICE $CODENAME" "$CHATID"
