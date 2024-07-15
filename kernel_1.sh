@@ -165,6 +165,7 @@ tg_error() {
 		git clone --depth=1 https://gitlab.com/itsshashanksp/android_prebuilts_clang_host_linux-x86_clang-r510928.git  "$HOME"/clang
 
 	export PATH="$HOME/clang/bin:$PATH"
+ 	export LD_LIBRARY_PATH="$$HOME/clang/lib:$LD_LIBRARY_PATH"
 	export KBUILD_COMPILER_STRING=$("$HOME"/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
 # Setup build process
@@ -182,7 +183,7 @@ Start=$(date +"%s")
                               OBJCOPY=llvm-objcopy \
                               OBJDUMP=llvm-objdump \
                               STRIP=llvm-strip \
-                              CC=clang \
+                              CC="clang" \
                               CLANG_TRIPLE=aarch64-linux-gnu- \
                               CROSS_COMPILE=aarch64-linux-android- \
                               CROSS_COMPILE_ARM32=arm-linux-androideabi-  2>&1 | tee error.log
