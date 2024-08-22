@@ -174,7 +174,7 @@ tg_error() {
 
 # Setup Kernelsu
 setup_ksu() {
- 	curl -kLSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
+ 	curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
 	#if [ -d "$KERNEL_DIR"/KernelSU ]; then
 	#	git apply KernelSU-hook.patch
 	#else
@@ -185,9 +185,9 @@ setup_ksu() {
 
 compiler_opt() {
 
-	echo "CONFIG_KPROBES=y" >> $DEFCONFIG_COMMON
-	echo "CONFIG_HAVE_KPROBES=y" >> $DEFCONFIG_COMMON
- 	echo "CONFIG_KPROBE_EVENTS=y" >> $DEFCONFIG_COMMON
+	echo "CONFIG_KPROBES=y" >> /home/runner/work/kernel/kernel/arch/arm64/configs/$DEFCONFIG_COMMON
+	echo "CONFIG_HAVE_KPROBES=y" >> /home/runner/work/kernel/kernel/arch/arm64/configs/$DEFCONFIG_COMMON
+ 	echo "CONFIG_KPROBE_EVENTS=y" >> /home/runner/work/kernel/kernel/arch/arm64/configs/$DEFCONFIG_COMMON
 }
 
 build_kernel() {
