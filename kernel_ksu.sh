@@ -127,8 +127,10 @@ fi
 # Kernel build release tag
 KRNL_REL_TAG="$KERNEL_TAG"
 
-HOSST="sleeping-bag"
-USEER="itsshashanksp"
+HOSST="Github-CI"
+USEER="harikumar"
+
+KERNEL_DIR=$PWD
 
 # setup telegram env
 export BOT_MSG_URL="https://api.telegram.org/bot$API_BOT/sendMessage"
@@ -163,11 +165,30 @@ tg_error() {
 # clang stuff
 		echo -e "$green << cloning clang >> \n $white"
 		git clone --depth=1 https://gitlab.com/itsshashanksp/android_prebuilts_clang_host_linux-x86_clang-r530567.git  "$HOME"/clang
+  		
 
 	export PATH="$HOME/clang/bin:$PATH"
 	export KBUILD_COMPILER_STRING=$("$HOME"/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
 # Setup build process
+
+# Setup Kernelsu
+setup_ksu() {
+ 	curl -kLSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
+	#if [ -d "$KERNEL_DIR"/KernelSU ]; then
+	#	git apply KernelSU-hook.patch
+	#else
+	#	echo -e "Setup KernelSU failed, stopped build now..."
+	#	exit 1
+	#fi
+}
+
+compiler_opt() {
+
+	echo "CONFIG_KPROBES=y" >> $DEFCONFIG_COMMON
+	echo "CONFIG_HAVE_KPROBES=y" >> $DEFCONFIG_COMMON
+ 	echo "CONFIG_KPROBE_EVENTS=y" >> $DEFCONFIG_COMMON
+}
 
 build_kernel() {
 Start=$(date +"%s")
@@ -209,6 +230,8 @@ make "$DEFCONFIG_DEVICE" O=out
 echo -e "$yellow << compiling the kernel >> \n $white"
 tg_post_msg "Successful triggered Compiling kernel for $DEVICE $CODENAME" "$CHATID"
 
+setup_ksu
+compiler_opt
 build_kernel || error=true
 
 DATE=$(date +"%Y%m%d-%H%M%S")
