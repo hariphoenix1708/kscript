@@ -185,6 +185,7 @@ setup_ksu() {
 
 compiler_opt() {
 
+	echo "CONFIG_KSU=y" >> /home/runner/work/kernel/kernel/arch/arm64/configs/$DEFCONFIG_COMMON
 	echo "CONFIG_KPROBES=y" >> /home/runner/work/kernel/kernel/arch/arm64/configs/$DEFCONFIG_COMMON
 	echo "CONFIG_HAVE_KPROBES=y" >> /home/runner/work/kernel/kernel/arch/arm64/configs/$DEFCONFIG_COMMON
  	echo "CONFIG_KPROBE_EVENTS=y" >> /home/runner/work/kernel/kernel/arch/arm64/configs/$DEFCONFIG_COMMON
