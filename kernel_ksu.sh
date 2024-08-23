@@ -130,7 +130,7 @@ KRNL_REL_TAG="$KERNEL_TAG"
 HOSST="Github-CI"
 USEER="harikumar"
 
-KERNEL_DIR=$PWD
+KERNEL_DIR=$(PWD)
 
 # setup telegram env
 export BOT_MSG_URL="https://api.telegram.org/bot$API_BOT/sendMessage"
@@ -175,12 +175,12 @@ tg_error() {
 # Setup Kernelsu
 setup_ksu() {
  	curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
-	#if [ -d "$KERNEL_DIR"/KernelSU ]; then
-	#	git apply KernelSU-hook.patch
-	#else
-	#	echo -e "Setup KernelSU failed, stopped build now..."
-	#	exit 1
-	#fi
+	if [ -d "$KERNEL_DIR"/KernelSU ]; then
+		git apply KernelSU-hook.patch
+	else
+		echo -e "Setup KernelSU failed, stopped build now..."
+		exit 1
+	fi
 }
 
 compiler_opt() {
