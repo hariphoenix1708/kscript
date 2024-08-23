@@ -232,7 +232,7 @@ echo -e "$yellow << compiling the kernel >> \n $white"
 tg_post_msg "Successful triggered Compiling kernel for $DEVICE $CODENAME" "$CHATID"
 
 setup_ksu
-compiler_opt
+#compiler_opt
 build_kernel || error=true
 
 DATE=$(date +"%Y%m%d-%H%M%S")
